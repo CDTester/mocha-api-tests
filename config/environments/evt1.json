@@ -1,0 +1,25 @@
+{
+  "name": "EVT1",
+  "apiGet": {
+    "basic": {
+      "baseUrl": "http://api.tvmaze.com/"
+    },
+    "appBasicAuth": {
+      "baseUrl": "http://",
+      "authType": "basic",
+      "auth": {"name": "chris", "password": "pwd"}
+    },
+    "appBearerAuth": {
+      "baseUrl": "http://",
+      "authType": "bearer",
+      "auth": "shhhhh"
+    },
+    "appHeaders": {
+      "baseUrl": "http://",
+      "headers": {
+        "X-Requested-With": "XMLHttpRequest"
+      }
+    }
+
+  }
+}

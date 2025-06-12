@@ -1,0 +1,46 @@
+{
+    "username": "",
+    "ntpassword": [],
+    "lmpassword": [],
+    "workspace": "",
+    "domain":"",
+    "explicitWaitMS": 25000,
+    "mochaTimeoutMS": 600000,
+    "browserMode": "headless",
+    "reporterEnabled": "mocha-summary-report,mochawesome",
+    "mochawesomeReporterOptions": {
+        "inline": true,
+        "code": false,
+        "charts": true,
+        "json": false,
+        "html": true,
+        "quiet": false,
+        "reportDir": "test_report",
+        "reportFilename": "test-report.html",
+        "reportPageTitle": "Test Report"
+    },
+    "mochaJunitReporterReporterOptions": {
+        "mochaFile": "test_report/junit.xml",
+        "testsuitesTitle": "Proj1",
+        "includePending": true,
+        "rootSuiteTitle": "component1",
+        "jenkinsMode": false
+    },
+    "mochaSummaryReportReporterOptions": {
+        "environmentVar": "npm_config_testenv",
+        "projectName": "npm_config_zephyr_project_name",
+        "projectVersion": "npm_config_zephyr_version",
+        "projectCycle": "npm_config_zephyr_cycle",
+        "manualTestLink": "npm_config_zephyr_url",
+        "output": "test_report",
+        "testIDPrefix": "$",
+        "tagPrefix": "@",
+        "consoleSummary": "true",
+        "textFileSummary": "true",
+        "htmlSummary": "true",
+        "passRateGreen": 80,
+        "passRateAmber": 70,
+        "otherReportLink": "test_report/test-report.html",
+        "includeMochaBase": false
+    }
+}
