@@ -14,11 +14,11 @@ The helper allows you to test the following methods:
 The return of these functions contains an object with selected Request and Response information.
 
 Request:
-<img align="center" src="./docs/Get_Request.png" alt="test step details" width="100%" />
+<img align="center" src="./docs/Get_Request.png" alt="test step details" width="50%" />
 
 
 Response:
-<img align="center" src="./docs/Get_Response.png" alt="test step details" width="100%" />
+<img align="center" src="./docs/Get_Response.png" alt="test step details" width="90%" />
 
 
 
