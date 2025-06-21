@@ -1,0 +1,29 @@
+{
+  "locations": [
+    {
+      "id": 1,
+      "location": "London",
+      "coordinates": [51.50771423145754, -0.13060374436758615]
+    },
+    {
+      "id": 2,
+      "location": "Paris",
+      "coordinates": [48.853900489399145, 2.5296888826347437]
+    },
+    {
+      "id": 3,
+      "location": "Brussels",
+      "coordinates": [50.85317865708064, 4.5307725744042076]
+    },
+    {
+      "id": 4,
+      "location": "Amsterdam",
+      "coordinates": [52.39285756544004, 5.156325162501068]
+    },
+    {
+      "id": 5,
+      "location": "Madrid",
+      "coordinates": [40.4388611284418, -3.5757096969311983]
+    }
+  ]
+}

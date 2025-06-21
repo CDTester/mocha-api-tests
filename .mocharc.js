@@ -17,27 +17,12 @@ module.exports = {
     recursive: true,
     reporter: 'mocha-multi-reporters',
     'reporter-option': ['configFile=./config/default.json'],
-    // reporter: 'mocha-summary-report',
-    // 'reporter-option': [
-    //     'environmentVar=npm_config_testenv',
-    //     'projectName=npm_config_zephyr_project_name',
-    //     'projectVersion=npm_config_zephyr_version',
-    //     'projectCycle=npm_config_zephyr_cycle',
-    //     'output=test_report',
-    //     'testIDPrefix=$',
-    //     'tagPrefix=@',
-    //     'consoleSummary=true',
-    //     'textFileSummary=true',
-    //     'htmlSummary=true',
-    //     'passRateGreen=80',
-    //     'passRateAmber=70'
-    // ],
     require: [
         "mocha-steps",
         "ts-node/register",
         "mochawesome/register"
     ],
-    retries: 4,
+    retries: 0,
     slow: '600',
     sort: false,
     spec: ['test/*'],
