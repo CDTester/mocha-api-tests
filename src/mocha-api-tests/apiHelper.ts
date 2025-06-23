@@ -1,9 +1,9 @@
-import superagent from 'superagent';
-import prefix from 'superagent-prefix';
-import moment from 'moment';
-import path from 'path';
+const superagent = require('superagent');
+import type * as superagentTypes from 'superagent';
+const moment = require('moment');
+const path = require('path');
 
-interface apiConfig {
+export interface apiConfig {
   baseUrl: string,
   headers?: object,
   authType?: string,
@@ -15,7 +15,7 @@ interface apiConfig {
   redirect: number
 }
 
-interface apiTest {
+export interface apiTest {
   request:{
     time: string,
     method: string,
@@ -52,26 +52,31 @@ interface apiTest {
 export default class apiHelper {
   protected instance: object;
   protected baseUrl: string;
-  public apiInstance: superagent.Agent;
+  protected auth: string;
+  protected authType: string;
+  protected headers: object
+  protected cookies: string[];
+  protected redirect: number;
+  protected timeout: number;
+  protected proxy: any;
+  protected responseType: string
+
+   // public apiInstance: superagentTypes.Agent;
+  // public apiInstance: superagent.Request;
 
   constructor (config:apiConfig) {
     this.baseUrl = config.baseUrl;
-    this.apiInstance = superagent.agent().use(prefix(config.baseUrl));
-    this.apiInstance.set('Content-Type', 'application/json').timeout(config.timeout || 1500).retry(0);
-
-    if (config.authType !== undefined) {
-      if (config.authType === 'basic' || config.authType === 'bearer') this.apiInstance.set('Authorisation', config.auth);
-      else if (config.authType === 'x-api-key') this.apiInstance.set('X-API-Key', config.auth);
-      else this.apiInstance.set('Authorisation', config.auth);
-    }
-    if (config.cookies !== undefined) this.apiInstance.set('Cookie', config.cookies);
-    if (config.responseType !== undefined) this.apiInstance.set('Response', config.responseType);
-    if (config.proxy !== undefined) this.apiInstance.auth['proxy'] = config.proxy;
-    if (config.redirect !== undefined) this.apiInstance.redirects(config.redirect);
+    this.auth = config.auth;
+    this.authType = config.authType;
+    this.headers = config.headers;
+    this.cookies = config.cookies;
+    this.redirect = config.redirect;
+    this.timeout = config.timeout;
+    this.proxy = config.proxy;
+    this.responseType = config.responseType;
   }
 
-
-  protected async mapReqResp (input: superagent.Request, inputOrig:object, output: superagent.Response, requestTime: string, responseTime: string): Promise<apiTest> {
+  protected async mapReqResp (input: superagentTypes.Request, inputOrig:object, output: superagentTypes.Response, requestTime: string, responseTime: string): Promise<apiTest> {
 
     const request:apiTest['request'] = {
       time: requestTime,
@@ -111,16 +116,26 @@ export default class apiHelper {
    */
   public async getRequest (endpoint: string, query?: object): Promise<apiTest> {
     const reqTime: string = moment().local().format('HH:mm:ss.SSS');
-    let request: superagent.Request;
-    let response: superagent.Response;
+    let request: superagentTypes.Request;
+    let response: superagentTypes.Response;
 
     try {
-      request = this.apiInstance.get(`${this.baseUrl}/${endpoint}`);
+      request = superagent.get(`${this.baseUrl}/${endpoint}`);
       if (query) {
         for (const q in query) {
           request.query(`${q}=${query[q]}`);
         }
       }
+      request.set('Content-Type', 'application/json').timeout(this.timeout || 1500).retry(0);
+      if (this.authType !== undefined) {
+        if (this.authType === 'basic' || this.authType === 'bearer') request.set('Authorisation', this.auth);
+        else if (this.authType === 'x-api-key') request.set('X-API-Key', this.auth);
+        else request.set('Authorisation', this.auth);
+      }
+      if (this.cookies !== undefined) request.set('Cookie', this.cookies);
+      if (this.responseType !== undefined) request.set('Response', this.responseType);
+      if (this.proxy !== undefined) request.auth['proxy'] = this.proxy;
+      if (this.redirect !== undefined) request.redirects(this.redirect);
 
       // hack to show queries in mapReqResp output. Once request is submitted, this value is cleared out
       const reqOrig = Object.fromEntries(Object.entries(request).map(([key, value]) => {
@@ -151,11 +166,11 @@ export default class apiHelper {
    */
   public async postRequest (endpoint: string, query?:object, body?: object|string|string[], file?:string[]): Promise<apiTest> {
     const reqTime: string = moment().local().format('HH:mm:ss.SSS');
-    let request: superagent.Request;
-    let response: superagent.Response;
+    let request: superagentTypes.Request;
+    let response: superagentTypes.Response;
 
     try {
-      request = this.apiInstance.post(`${this.baseUrl}/${endpoint}`);
+      request = superagent.post(`${this.baseUrl}/${endpoint}`);
       if (query !== undefined) {
         for (const q in query) {
           request.query(`${q}=${query[q]}`);
@@ -168,7 +183,16 @@ export default class apiHelper {
         const filePath = path.resolve(...file);
         request.set('Content-Type', 'multipart/form-data').attach('file', filePath);
       }
-
+      if (this.authType !== undefined) {
+        if (this.authType === 'basic' || this.authType === 'bearer') request.set('Authorisation', this.auth);
+        else if (this.authType === 'x-api-key') request.set('X-API-Key', this.auth);
+        else request.set('Authorisation', this.auth);
+      }
+      if (this.cookies !== undefined) request.set('Cookie', this.cookies);
+      if (this.responseType !== undefined) request.set('Response', this.responseType);
+      if (this.proxy !== undefined) request.auth['proxy'] = this.proxy;
+      if (this.redirect !== undefined) request.redirects(this.redirect);
+      
       // hack to show queries in mapReqResp output. Once request is submitted, this value is cleared out
       const reqOrig = Object.fromEntries(Object.entries(request).map(([key, value]) => {
         return [key, value];
@@ -197,11 +221,11 @@ export default class apiHelper {
    */
   public async putRequest (endpoint: string, query?:object, body?: object|string|string[], file?:string[]): Promise<apiTest> {
     const reqTime: string = moment().local().format('HH:mm:ss.SSS');
-    let request: superagent.Request;
-    let response: superagent.Response;
+    let request: superagentTypes.Request;
+    let response: superagentTypes.Response;
 
     try {
-      request = this.apiInstance.put(`${this.baseUrl}/${endpoint}`);
+      request = superagent.put(`${this.baseUrl}/${endpoint}`);
       if (query !== undefined) {
         for (const q in query) {
           request.query(`${q}=${query[q]}`);
@@ -215,7 +239,20 @@ export default class apiHelper {
 
         request.set('Content-Type', 'multipart/form-data').attach('file', filePath);
       }
-
+      if (file !== undefined) {
+        const filePath = path.resolve(...file);
+        request.set('Content-Type', 'multipart/form-data').attach('file', filePath);
+      }
+      if (this.authType !== undefined) {
+        if (this.authType === 'basic' || this.authType === 'bearer') request.set('Authorisation', this.auth);
+        else if (this.authType === 'x-api-key') request.set('X-API-Key', this.auth);
+        else request.set('Authorisation', this.auth);
+      }
+      if (this.cookies !== undefined) request.set('Cookie', this.cookies);
+      if (this.responseType !== undefined) request.set('Response', this.responseType);
+      if (this.proxy !== undefined) request.auth['proxy'] = this.proxy;
+      if (this.redirect !== undefined) request.redirects(this.redirect);
+      
       // hack to show queries in mapReqResp output. Once request is submitted, this value is cleared out
       const reqOrig = Object.fromEntries(Object.entries(request).map(([key, value]) => {
         return [key, value];
@@ -247,11 +284,11 @@ export default class apiHelper {
    */
   public async deleteRequest (endpoint: string, query?:object, body?: object|string|string[]): Promise<apiTest> {
     const reqTime: string = moment().local().format('HH:mm:ss.SSS');
-    let request: superagent.Request;
-    let response: superagent.Response;
+    let request: superagentTypes.Request;
+    let response: superagentTypes.Response;
 
     try {
-      request = this.apiInstance.put(`${this.baseUrl}/${endpoint}`);
+      request = superagent.put(`${this.baseUrl}/${endpoint}`);
       if (query !== undefined) {
         for (const q in query) {
           request.query(`${q}=${query[q]}`);
@@ -260,7 +297,16 @@ export default class apiHelper {
       if (body !== undefined) {
         request.send(body);
       }
-
+      if (this.authType !== undefined) {
+        if (this.authType === 'basic' || this.authType === 'bearer') request.set('Authorisation', this.auth);
+        else if (this.authType === 'x-api-key') request.set('X-API-Key', this.auth);
+        else request.set('Authorisation', this.auth);
+      }
+      if (this.cookies !== undefined) request.set('Cookie', this.cookies);
+      if (this.responseType !== undefined) request.set('Response', this.responseType);
+      if (this.proxy !== undefined) request.auth['proxy'] = this.proxy;
+      if (this.redirect !== undefined) request.redirects(this.redirect);
+      
       // hack to show queries in mapReqResp output. Once request is submitted, this value is cleared out
       const reqOrig = Object.fromEntries(Object.entries(request).map(([key, value]) => {
         return [key, value];

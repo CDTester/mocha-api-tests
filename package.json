@@ -1,8 +1,9 @@
 {
   "name": "mocha-api-tests",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Examples of how to test APIs on a Mocha test framework",
-  "main": "src/mocha-api-tests/apiHelper.ts",
+  "main": "src/mocha-api-tests/apiHelper.js",
+  "types": "src/mocha-api-tests/apiHelper.ts",
   "scripts": {
     "test": "mocha --config ./.mocharc.js --no-warnings --no-depreciation",
     "eslint": "node node_modules/eslint/bin/eslint.js -f stylish"
@@ -45,7 +46,7 @@
     "mocha-multi-reporters": "^1.5.1",
     "mocha-steps": "^1.3.0",
     "mochawesome": "^7.1.3",
-    "mocha-summary-report": "github:CDTester/mocha-summary-report",
+    "mocha-summary-report": "github:CDTester/mocha-summary-report#1.0.2",
     "path": "^0.12.7",
     "ts-node": "^10.7.0",
     "typescript": "^5.7.2"
