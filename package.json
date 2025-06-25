@@ -1,6 +1,6 @@
 {
   "name": "mocha-api-tests",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Examples of how to test APIs on a Mocha test framework",
   "main": "src/mocha-api-tests/apiHelper.js",
   "types": "src/mocha-api-tests/apiHelper.ts",
