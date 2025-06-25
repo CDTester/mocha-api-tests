@@ -43,8 +43,6 @@ var path = require('path');
  * A base class for API helper
  */
 var apiHelper = /** @class */ (function () {
-    // public apiInstance: superagentTypes.Agent;
-    // public apiInstance: superagent.Request;
     function apiHelper(config) {
         this.baseUrl = config.baseUrl;
         this.auth = config.auth;
@@ -55,6 +53,9 @@ var apiHelper = /** @class */ (function () {
         this.timeout = config.timeout;
         this.proxy = config.proxy;
         this.responseType = config.responseType;
+        this.accept = config.accept;
+        this.cacheControl = config.cacheControl;
+        this.connection = config.connection;
     }
     apiHelper.prototype.mapReqResp = function (input, inputOrig, output, requestTime, responseTime) {
         return __awaiter(this, void 0, void 0, function () {
@@ -112,12 +113,14 @@ var apiHelper = /** @class */ (function () {
                         }
                         request.set('Content-Type', 'application/json').timeout(this.timeout || 1500).retry(0);
                         if (this.authType !== undefined) {
-                            if (this.authType === 'basic' || this.authType === 'bearer')
-                                request.set('Authorisation', this.auth);
+                            if (this.authType === 'basic')
+                                request.set('Authorization', "Basic ".concat(this.auth));
+                            else if (this.authType === 'bearer')
+                                request.set('Authorization', "Bearer ".concat(this.auth));
                             else if (this.authType === 'x-api-key')
                                 request.set('X-API-Key', this.auth);
                             else
-                                request.set('Authorisation', this.auth);
+                                request.set('Authorization', this.auth);
                         }
                         if (this.cookies !== undefined)
                             request.set('Cookie', this.cookies);
@@ -127,6 +130,12 @@ var apiHelper = /** @class */ (function () {
                             request.auth['proxy'] = this.proxy;
                         if (this.redirect !== undefined)
                             request.redirects(this.redirect);
+                        if (this.accept !== undefined)
+                            request.set('Accept', this.accept);
+                        if (this.connection !== undefined)
+                            request.set('Connection', this.connection);
+                        if (this.cacheControl !== undefined)
+                            request.set('Cache Control', this.cacheControl);
                         reqOrig = Object.fromEntries(Object.entries(request).map(function (_a) {
                             var key = _a[0], value = _a[1];
                             return [key, value];
@@ -180,12 +189,14 @@ var apiHelper = /** @class */ (function () {
                             request.set('Content-Type', 'multipart/form-data').attach('file', filePath);
                         }
                         if (this.authType !== undefined) {
-                            if (this.authType === 'basic' || this.authType === 'bearer')
-                                request.set('Authorisation', this.auth);
+                            if (this.authType === 'basic')
+                                request.set('Authorization', "Basic ".concat(this.auth));
+                            else if (this.authType === 'bearer')
+                                request.set('Authorization', "Bearer ".concat(this.auth));
                             else if (this.authType === 'x-api-key')
                                 request.set('X-API-Key', this.auth);
                             else
-                                request.set('Authorisation', this.auth);
+                                request.set('Authorization', this.auth);
                         }
                         if (this.cookies !== undefined)
                             request.set('Cookie', this.cookies);
@@ -195,6 +206,12 @@ var apiHelper = /** @class */ (function () {
                             request.auth['proxy'] = this.proxy;
                         if (this.redirect !== undefined)
                             request.redirects(this.redirect);
+                        if (this.accept !== undefined)
+                            request.set('Accept', this.accept);
+                        if (this.connection !== undefined)
+                            request.set('Connection', this.connection);
+                        if (this.cacheControl !== undefined)
+                            request.set('Cache Control', this.cacheControl);
                         reqOrig = Object.fromEntries(Object.entries(request).map(function (_a) {
                             var key = _a[0], value = _a[1];
                             return [key, value];
@@ -252,12 +269,14 @@ var apiHelper = /** @class */ (function () {
                             request.set('Content-Type', 'multipart/form-data').attach('file', filePath);
                         }
                         if (this.authType !== undefined) {
-                            if (this.authType === 'basic' || this.authType === 'bearer')
-                                request.set('Authorisation', this.auth);
+                            if (this.authType === 'basic')
+                                request.set('Authorization', "Basic ".concat(this.auth));
+                            else if (this.authType === 'bearer')
+                                request.set('Authorization', "Bearer ".concat(this.auth));
                             else if (this.authType === 'x-api-key')
                                 request.set('X-API-Key', this.auth);
                             else
-                                request.set('Authorisation', this.auth);
+                                request.set('Authorization', this.auth);
                         }
                         if (this.cookies !== undefined)
                             request.set('Cookie', this.cookies);
@@ -267,6 +286,12 @@ var apiHelper = /** @class */ (function () {
                             request.auth['proxy'] = this.proxy;
                         if (this.redirect !== undefined)
                             request.redirects(this.redirect);
+                        if (this.accept !== undefined)
+                            request.set('Accept', this.accept);
+                        if (this.connection !== undefined)
+                            request.set('Connection', this.connection);
+                        if (this.cacheControl !== undefined)
+                            request.set('Cache Control', this.cacheControl);
                         reqOrig = Object.fromEntries(Object.entries(request).map(function (_a) {
                             var key = _a[0], value = _a[1];
                             return [key, value];
@@ -317,12 +342,14 @@ var apiHelper = /** @class */ (function () {
                             request.send(body);
                         }
                         if (this.authType !== undefined) {
-                            if (this.authType === 'basic' || this.authType === 'bearer')
-                                request.set('Authorisation', this.auth);
+                            if (this.authType === 'basic')
+                                request.set('Authorization', "Basic ".concat(this.auth));
+                            else if (this.authType === 'bearer')
+                                request.set('Authorization', "Bearer ".concat(this.auth));
                             else if (this.authType === 'x-api-key')
                                 request.set('X-API-Key', this.auth);
                             else
-                                request.set('Authorisation', this.auth);
+                                request.set('Authorization', this.auth);
                         }
                         if (this.cookies !== undefined)
                             request.set('Cookie', this.cookies);
@@ -332,6 +359,12 @@ var apiHelper = /** @class */ (function () {
                             request.auth['proxy'] = this.proxy;
                         if (this.redirect !== undefined)
                             request.redirects(this.redirect);
+                        if (this.accept !== undefined)
+                            request.set('Accept', this.accept);
+                        if (this.connection !== undefined)
+                            request.set('Connection', this.connection);
+                        if (this.cacheControl !== undefined)
+                            request.set('Cache Control', this.cacheControl);
                         reqOrig = Object.fromEntries(Object.entries(request).map(function (_a) {
                             var key = _a[0], value = _a[1];
                             return [key, value];

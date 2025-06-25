@@ -5,14 +5,19 @@ const path = require('path');
 
 export interface apiConfig {
   baseUrl: string,
-  headers?: object,
-  authType?: string,
-  auth?: string,
-  cookies?: string[],
-  responseType?: string,
-  proxy?: object,
-  timeout?: number,
-  redirect: number
+  headers: object,
+  authType: string,
+  auth: string,
+  cookies: string[],
+  responseType: string,
+  proxy: object,
+  timeout: number,
+  redirect: number,
+  config: string,
+  accept: string;
+  cacheControl: string,
+  connection: string
+
 }
 
 export interface apiTest {
@@ -48,7 +53,6 @@ export interface apiTest {
 /**
  * A base class for API helper
  */
-
 export default class apiHelper {
   protected instance: object;
   protected baseUrl: string;
@@ -60,9 +64,9 @@ export default class apiHelper {
   protected timeout: number;
   protected proxy: any;
   protected responseType: string
-
-   // public apiInstance: superagentTypes.Agent;
-  // public apiInstance: superagent.Request;
+  protected accept: string;
+  protected cacheControl: string;
+  protected connection: string;
 
   constructor (config:apiConfig) {
     this.baseUrl = config.baseUrl;
@@ -74,6 +78,10 @@ export default class apiHelper {
     this.timeout = config.timeout;
     this.proxy = config.proxy;
     this.responseType = config.responseType;
+    this.accept = config.accept;
+    this.cacheControl = config.cacheControl;
+    this.connection = config.connection;
+
   }
 
   protected async mapReqResp (input: superagentTypes.Request, inputOrig:object, output: superagentTypes.Response, requestTime: string, responseTime: string): Promise<apiTest> {
@@ -128,14 +136,18 @@ export default class apiHelper {
       }
       request.set('Content-Type', 'application/json').timeout(this.timeout || 1500).retry(0);
       if (this.authType !== undefined) {
-        if (this.authType === 'basic' || this.authType === 'bearer') request.set('Authorisation', this.auth);
+        if (this.authType === 'basic') request.set('Authorization', `Basic ${this.auth}`);
+        else if (this.authType === 'bearer') request.set('Authorization', `Bearer ${this.auth}`);
         else if (this.authType === 'x-api-key') request.set('X-API-Key', this.auth);
-        else request.set('Authorisation', this.auth);
+        else request.set('Authorization', this.auth);
       }
       if (this.cookies !== undefined) request.set('Cookie', this.cookies);
       if (this.responseType !== undefined) request.set('Response', this.responseType);
       if (this.proxy !== undefined) request.auth['proxy'] = this.proxy;
       if (this.redirect !== undefined) request.redirects(this.redirect);
+      if (this.accept !== undefined) request.set('Accept', this.accept);
+      if (this.connection !== undefined) request.set('Connection', this.connection);
+      if (this.cacheControl !== undefined) request.set('Cache Control', this.cacheControl);
 
       // hack to show queries in mapReqResp output. Once request is submitted, this value is cleared out
       const reqOrig = Object.fromEntries(Object.entries(request).map(([key, value]) => {
@@ -184,14 +196,19 @@ export default class apiHelper {
         request.set('Content-Type', 'multipart/form-data').attach('file', filePath);
       }
       if (this.authType !== undefined) {
-        if (this.authType === 'basic' || this.authType === 'bearer') request.set('Authorisation', this.auth);
+        if (this.authType === 'basic') request.set('Authorization', `Basic ${this.auth}`);
+        else if (this.authType === 'bearer') request.set('Authorization', `Bearer ${this.auth}`);
         else if (this.authType === 'x-api-key') request.set('X-API-Key', this.auth);
-        else request.set('Authorisation', this.auth);
+        else request.set('Authorization', this.auth);
       }
       if (this.cookies !== undefined) request.set('Cookie', this.cookies);
       if (this.responseType !== undefined) request.set('Response', this.responseType);
       if (this.proxy !== undefined) request.auth['proxy'] = this.proxy;
       if (this.redirect !== undefined) request.redirects(this.redirect);
+      if (this.accept !== undefined) request.set('Accept', this.accept);
+      if (this.connection !== undefined) request.set('Connection', this.connection);
+      if (this.cacheControl !== undefined) request.set('Cache Control', this.cacheControl);
+
       
       // hack to show queries in mapReqResp output. Once request is submitted, this value is cleared out
       const reqOrig = Object.fromEntries(Object.entries(request).map(([key, value]) => {
@@ -244,14 +261,18 @@ export default class apiHelper {
         request.set('Content-Type', 'multipart/form-data').attach('file', filePath);
       }
       if (this.authType !== undefined) {
-        if (this.authType === 'basic' || this.authType === 'bearer') request.set('Authorisation', this.auth);
+        if (this.authType === 'basic') request.set('Authorization', `Basic ${this.auth}`);
+        else if (this.authType === 'bearer') request.set('Authorization', `Bearer ${this.auth}`);
         else if (this.authType === 'x-api-key') request.set('X-API-Key', this.auth);
-        else request.set('Authorisation', this.auth);
+        else request.set('Authorization', this.auth);
       }
       if (this.cookies !== undefined) request.set('Cookie', this.cookies);
       if (this.responseType !== undefined) request.set('Response', this.responseType);
       if (this.proxy !== undefined) request.auth['proxy'] = this.proxy;
       if (this.redirect !== undefined) request.redirects(this.redirect);
+      if (this.accept !== undefined) request.set('Accept', this.accept);
+      if (this.connection !== undefined) request.set('Connection', this.connection);
+      if (this.cacheControl !== undefined) request.set('Cache Control', this.cacheControl);
       
       // hack to show queries in mapReqResp output. Once request is submitted, this value is cleared out
       const reqOrig = Object.fromEntries(Object.entries(request).map(([key, value]) => {
@@ -298,14 +319,18 @@ export default class apiHelper {
         request.send(body);
       }
       if (this.authType !== undefined) {
-        if (this.authType === 'basic' || this.authType === 'bearer') request.set('Authorisation', this.auth);
+        if (this.authType === 'basic') request.set('Authorization', `Basic ${this.auth}`);
+        else if (this.authType === 'bearer') request.set('Authorization', `Bearer ${this.auth}`);
         else if (this.authType === 'x-api-key') request.set('X-API-Key', this.auth);
-        else request.set('Authorisation', this.auth);
+        else request.set('Authorization', this.auth);
       }
       if (this.cookies !== undefined) request.set('Cookie', this.cookies);
       if (this.responseType !== undefined) request.set('Response', this.responseType);
       if (this.proxy !== undefined) request.auth['proxy'] = this.proxy;
       if (this.redirect !== undefined) request.redirects(this.redirect);
+      if (this.accept !== undefined) request.set('Accept', this.accept);
+      if (this.connection !== undefined) request.set('Connection', this.connection);
+      if (this.cacheControl !== undefined) request.set('Cache Control', this.cacheControl);
       
       // hack to show queries in mapReqResp output. Once request is submitted, this value is cleared out
       const reqOrig = Object.fromEntries(Object.entries(request).map(([key, value]) => {
