@@ -1,9 +1,9 @@
 {
   "name": "mocha-api-tests",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Examples of how to test APIs on a Mocha test framework",
   "main": "src/mocha-api-tests/apiHelper.js",
-  "types": "src/mocha-api-tests/apiHelper.ts",
+  "types": "types/apiHelper.d.ts",
   "scripts": {
     "test": "mocha --config ./.mocharc.js --no-warnings --no-depreciation",
     "eslint": "node node_modules/eslint/bin/eslint.js -f stylish"
