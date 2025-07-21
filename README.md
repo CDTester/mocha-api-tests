@@ -25,12 +25,18 @@ Response:
 
 
 
-
 ## Install
-Add mocha-api-tests to your project:
+Add mocha-api-tests to your project by adding it to to your package.json:
 ```
-npm install mocha-api-tests
+  "dependencies": {
+    "mocha-api-tests": "github:CDTester/mocha-api-tests"
+  },
 ```
+Then install it with:
+```
+npm i
+```
+
 
 ## Usage
 Usage examples can be found on github [mocha-summary-report](https://github.com/CDTester/mocha-summary-report).
