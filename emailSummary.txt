@@ -2,9 +2,9 @@ Project: proj1
 Project Version: Release_1
 Test Cycle: smoke_test
 Environment: evt1
-Run Start Time: 11/12/2025 16:44:48.558
-Run End Time: 16:44:50.227
-Duration: 00:00:01.669
+Run Start Time: 11/12/2025 20:15:53.477
+Run End Time: 20:15:54.598
+Duration: 00:00:01.121
 Total Tests: 2
 Passed Tests: 2
 Failed Tests: 0
@@ -15,4 +15,4 @@ Test Steps failed: 0
 Test Steps skipped: 0
 Test Pass Rate: 100.00 %
 Test Step Pass Rate: 100.00 %
-Duration: 00:00:01.669
+Duration: 00:00:01.121
