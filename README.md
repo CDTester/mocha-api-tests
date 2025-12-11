@@ -5,9 +5,10 @@ The package being used to test APIs is [Superagent](https://www.npmjs.com/packag
 The POST tests utilises a mocked reponse using [Nock](https://www.npmjs.com/package/nock).
 
 ## Latest Build Report
-[![Test Status](https://github.com/CDTester/mocha-api-tests/actions/workflows/selenium.yml/badge.svg)](https://github.com/CDTester/mocha-api-tests/actions/workflows/selenium.yml)
+[![Test Status](https://github.com/CDTester/mocha-api-tests/actions/workflows/mochaApiSupertest.yml/badge.svg)](https://github.com/CDTester/mocha-api-tests/actions/workflows/mochaApiSupertest.yml)
 [![Test Report](https://github.com/CDTester/mocha-api-tests/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/CDTester/mocha-api-tests/actions/workflows/pages/pages-build-deployment)
 
+https://cdtester.github.io/mocha-api-tests/summary-report.html
 https://cdtester.github.io/mocha-api-tests/test-report.html
 
 
