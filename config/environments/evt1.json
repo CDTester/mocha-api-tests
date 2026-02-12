@@ -12,7 +12,7 @@
     "appForbidden": {
       "baseUrl": "https://api-ssl.bitly.com/v4",
       "authType": "bearer",
-      "auth": "Bearer YOUR_ACCESS_TOKEN"
+      "auth": "YOUR_ACCESS_TOKEN"
     },
     "appNotPost": {
       "baseUrl": "https://icanhazdadjoke.com",
